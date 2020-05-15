@@ -5,88 +5,53 @@ using System.Runtime.CompilerServices;
 
 namespace radiants.ReactiveTween
 {
-	//https://easings.net/ja
 	public enum Easing
 	{
-		/// <summary>線形</summary>
 		Linear,
 
-		/// <summary>三角関数</summary>
 		SinIn,
-		/// <summary>三角関数</summary>
 		SinOut,
-		/// <summary>三角関数</summary>
 		SinInOut,
 
-		/// <summary>二次関数</summary>
 		QuadOut,
-		/// <summary>二次関数</summary>
 		QuadIn,
-		/// <summary>二次関数</summary>
 		QuadInOut,
 
-
-		/// <summary>三次関数</summary>
 		CubicOut,
-		/// <summary>三次関数</summary>
 		CubicIn,
-		/// <summary>三次関数</summary>
 		CubicInOut,
 
-		/// <summary>四次関数</summary>
 		QuartOut,
-		/// <summary>四次関数</summary>
 		QuartIn,
-		/// <summary>四次関数</summary>
 		QuartInOut,
 
-		/// <summary>五次関数</summary>
 		QuintOut,
-		/// <summary>五次関数</summary>
 		QuintIn,
-		/// <summary>五次関数</summary>
 		QuintInOut,
 
-		/// <summary>指数関数</summary>
 		ExpoOut,
-		/// <summary>指数関数</summary>
 		ExpoIn,
-		/// <summary>指数関数</summary>
 		ExpoInOut,
 
-		/// <summary>ルート</summary>
 		CircuOut,
-		/// <summary>ルート</summary>
 		CircuIn,
-		/// <summary>ルート</summary>
 		CircuInOut,
 
-		/// <summary>値を一度オーバーする</summary>
 		BackOut,
-		/// <summary>値を一度オーバーする</summary>
 		BackIn,
-		/// <summary>値を一度オーバーする</summary>
 		BackInOut,
 
-		/// <summary>弾性関数</summary>
 		ElasticOut,
-		/// <summary>弾性関数</summary>
 		ElasticIn,
-		/// <summary>弾性関数</summary>
 		ElasticInOut,
 
-		/// <summary>バウンド</summary>
 		BounceOut,
-		/// <summary>バウンド</summary>
 		BounceIn,
-		/// <summary>バウンド</summary>
 		BounceInOut
 	}
 
-	//Easing enumのための拡張メソッド
 	public static class EasingExt
 	{
-		//パフォーマンス的にintキャストDictionaryの事前定義が一番よさげ
 		private static readonly Dictionary<int, System.Func<float, float>> EaseFuncDict = new Dictionary<int, System.Func<float, float>>()
 		{
 			{(int)Easing.Linear, _f => _f },
@@ -142,33 +107,23 @@ namespace radiants.ReactiveTween
 			return EaseFuncDict[(int)_ease](_t);
 		}
 
-		#region 各種型別Lerpメソッド
+		#region Lerp Methods
 
-		/// <summary>
-		/// float値のLerp
-		/// </summary>
 		public static float Ease(this Easing _ease, float _from, float _to, float _t)
 		{
 			return _from + (_to - _from) * _ease.Ease(_t);
 		}
-		/// <summary>
-		/// float値のLerp, _tは0～1で制限
-		/// </summary>
 		public static float EaseSaturate(this Easing _ease, float _from, float _to, float _t)
 		{
 			return _from + (_to - _from) * _ease.EaseSaturate(_t);
 		}
 
-		/// <summary>
-		/// 回転角のLerp、最短の方向で半周以内に着くよう回転する。度数法指定。
-		/// </summary>
 		public static float EaseAngleDegree(this Easing _ease, float _from, float _to, float _t)
 		{
 			float delta = _to - _from;
 			if (Mathf.Abs(delta) < 180f)
 				return _from + delta * _ease.Ease(_t);
 
-			//差が180度以上ある場合、fromを補正
 			if(_to > _from)
 			{
 				while (_to - _from > 180f)
@@ -182,16 +137,12 @@ namespace radiants.ReactiveTween
 			return _from + (_to - _from) * _ease.Ease(_t);
 		}
 
-		/// <summary>
-		/// 回転角のLerp、最短の方向で半周以内に着くよう回転する。弧度法指定。
-		/// </summary>
 		public static float EaseAngleRadian(this Easing _ease, float _from, float _to, float _t)
 		{
 			float delta = _to - _from;
 			if (Mathf.Abs(delta) < Mathf.PI)
 				return _from + delta * _ease.Ease(_t);
 
-			//差が180度以上ある場合、fromを補正
 			if (_to > _from)
 			{
 				while (_to - _from > Mathf.PI)
@@ -257,15 +208,8 @@ namespace radiants.ReactiveTween
 
 
 
-	//イージング関数を提供する
-	//直呼び出しも一応可能
 	public static class EasingFunctions
 	{
-		//MethodImplOptions.AggressiveInlining = 256 でコンパイル時インライン展開を推奨
-		//.NET2.0では存在しないため、コンパイルエラーを避けて直値指定しておく
-		/// <summary>
-		/// 数値を0～1の範囲に収める。超えた場合は0,1に貼り付く
-		/// </summary>
 		[MethodImpl(256)]
 		public static void Saturate(ref float _value)
 		{
@@ -348,7 +292,6 @@ namespace radiants.ReactiveTween
 		public static float ExpoIn(float t)
 		{
 			//y=2^(10*(x-1))
-			//x=0の時はy!=0となるため決め打ちが必要
 			if (t == 0f) return 0f;
 
 			return Mathf.Pow(2f, 10 * (t - 1));
@@ -366,7 +309,6 @@ namespace radiants.ReactiveTween
 		[MethodImpl(256)]
 		public static float CircuIn(float t)
 		{
-			//平方根のため安全を期してSaturate
 			//-(sqrt(1-x^2)-1)
 			Saturate(ref t);
 			return -Mathf.Sqrt(1 - t * t) + 1;

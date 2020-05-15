@@ -28,7 +28,10 @@ namespace radiants.ReactiveTween
 				elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
 
 				if (cancellation.IsCancellationRequested)
+				{
+					observer.OnCompleted();
 					yield break;
+				}
 			}
 			observer.OnNext(1f);
 			observer.OnCompleted();
