@@ -35,7 +35,7 @@ You can cancel stream to `Dispose()`.
 ```
 Fader.Fade(0.5f)
 	.Subscribe(value => transform.position = Easing.QuadIn.Ease(
-		new Vector3(-5f, 0f, 0f), new Vector3(5f, 0f, 0f), _f));
+		new Vector3(-5f, 0f, 0f), new Vector3(5f, 0f, 0f), value));
 ```
 
 ## License
