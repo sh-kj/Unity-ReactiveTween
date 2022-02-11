@@ -1,15 +1,16 @@
 # Unity ReactiveTween
 
-Fast, less-memory-alloc Tween system using UniRx and Microcoroutine.
+Fast, less-memory-alloc Tween system using UniRx and Microcoroutine, or UniTask.
 
 ## Requirement
 
 - Unity 2017 or higher(can be compatible with older version)
-- UniRx https://assetstore.unity.com/packages/tools/integration/unirx-reactive-extensions-for-unity-17276
+- UniRx https://github.com/neuecc/UniRx
+- UniTask https://github.com/Cysharp/UniTask
 
-## Usage
+## Usage[UniRx]
 
-have to `using UniRx`;
+have to `using UniRx;`
 
 ```
 Fader.Fade(0.5f)
@@ -28,7 +29,24 @@ fade.Dispose();
 You can cancel stream to `Dispose()`.  
 `onCompleted` action will be called when it canceled too.
 
-### Easing
+## Usage[UniTask]
+
+have to `using Cysharp.Threading.Tasks;`
+
+```
+await Fader.Fade(0.5f, value => DoSomething(value));
+```
+`Fader.Fade` returns awaitable UniTask object.  
+
+```
+System.Threading.CancellationTokenSource source = new System.Threading.CancellationTokenSource();
+var task = Fader.Fade(0.5f, value => DoSomething(value), () => DoComplete(), false, source.Token);
+source.Cancel();
+```
+You can cancel task by CancellationToken.  
+`onCompleted` action will be called when it canceled too.
+
+## Easing
 
 `Easing` contains some easing equations to use, like this;
 

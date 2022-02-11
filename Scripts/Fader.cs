@@ -6,7 +6,7 @@ using UniRx;
 
 namespace radiants.ReactiveTween
 {
-	public static class Fader
+	public static partial class Fader
 	{
 		public static IObservable<float> Fade(float time, bool useUnscaledTime = false)
 		{
