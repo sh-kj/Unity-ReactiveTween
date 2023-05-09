@@ -1,0 +1,12 @@
+{
+	"name": "com.radiants.reactivetween",
+	"displayName": "ReactiveTween",
+	"version": "1.0.0",
+	"unity": "2018.4",
+	"description": "Fast, less-memory-alloc Tween system using UniRx and Microcoroutine, or UniTask.",
+	"license": "MIT",
+	"dependencies": {
+		"com.neuecc.unirx": "7.1.0",
+		"com.cysharp.unitask": "2.3.3"
+	}
+}
