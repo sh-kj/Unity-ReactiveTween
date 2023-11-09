@@ -4,5 +4,9 @@
 	"version": "1.0.0",
 	"unity": "2018.4",
 	"description": "Fast, less-memory-alloc Tween system using UniRx and Microcoroutine, or UniTask.",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
+		"com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
+	}
 }
