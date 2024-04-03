@@ -1,5 +1,7 @@
 # Unity ReactiveTween
 
+*THIS LIBRARY was DEPRECATED, see https://github.com/sh-kj/ReactiveTween*
+
 Fast, less-memory-alloc Tween system using UniRx and Microcoroutine, or UniTask.
 
 ## Requirement
